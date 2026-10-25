@@ -1,0 +1,163 @@
+% \iffalse meta-comment
+%
+% DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+%
+% Author: Sergiusz Warga <sergiusz.warga@gmail.com>
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{WUSTReport.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+%<package>\ProvidesPackage{WUSTReport}
+%<*package>
+  [2024/06/21 v0.1.0 WUST Report package]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[
+  hidelinks,
+  bookmarks,
+  bookmarksopen,
+  bookmarksopenlevel=2,
+  pdftitle={WUST Report LaTeX package},
+  pdfauthor={Sergiusz Warga}
+]{hyperref}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\setlength\hfuzz{15pt}      % don't show so many
+\hbadness=7000              % over- and underfull box warnings
+\begin{document}
+  \DocInput{WUSTReport.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \changes{v0.1.0}{2024/06/21}{Initial version}
+%
+% \GetFileInfo{WUSTReport.dtx}
+%
+% \DoNotIndex{\@date, \@title}
+% \DoNotIndex{\\}
+% \DoNotIndex{\begin}
+% \DoNotIndex{\DeclareRobustCommand, \dimexpr, \doublerulesep}
+% \DoNotIndex{\end}
+% \DoNotIndex{\fbox, \fboxrule, \fboxsep}
+% \DoNotIndex{\gdef}
+% \DoNotIndex{\hoffset, \Huge}
+% \DoNotIndex{\Large}
+% \DoNotIndex{\newlength, \newpage, \null}
+% \DoNotIndex{\oddsidemargin}
+% \DoNotIndex{\paperwidth}
+% \DoNotIndex{\renewcommand}
+% \DoNotIndex{\setlength}
+% \DoNotIndex{\textwidth}
+% \DoNotIndex{\uppercase}
+% \DoNotIndex{\vfill}
+%
+% \title{WUST Report package\thanks
+%   {This document corresponds to \texttt{WUSTReport}~\fileversion,
+%       dated \filedate.}}\author{Sergiusz Warga\texttt{sergiusz.warga@gmail.com}}
+%
+% \maketitle
+%
+% \StopEventually{\PrintChanges \PrintIndex}
+%
+% \section{Implementation}
+%
+% \subsection{Packages}
+%    \begin{macrocode}
+\RequirePackage{graphicx}
+\RequirePackage{hyperref}
+\RequirePackage{xspace}
+%    \end{macrocode}
+%
+% \subsection{\texttt{hyperref} package configuration}
+%
+%    \begin{macrocode}
+\hypersetup{
+  pdfauthor={Sergiusz Warga},
+  pdftitle={\@title},
+  pdfkeywords={}
+  pdfstartview={Fit}, % Fits the page to the window
+  hidelinks,
+  bookmarksopen=false,
+  pdfpagemode=UseNone,
+  pdfproducer={XeLateX with hyperref},
+  pdfcreator={Xelatex},
+}
+%    \end{macrocode}
+%
+% \subsection{Dimentions}
+%
+% Text area.
+%
+%    \begin{macrocode}
+\setlength{\textwidth}{140mm}
+%    \end{macrocode}
+%
+% Center the text area.
+%
+%    \begin{macrocode}
+\setlength{\hoffset}{
+  \dimexpr
+  (\paperwidth-\textwidth)/2-\oddsidemargin-1in
+}
+
+\DeclareRobustCommand*{\reportgroup}[1]{\gdef\@reportgroup{#1}}
+\DeclareRobustCommand*{\reporttutor}[1]{\gdef\@reporttutor{#1}}
+\DeclareRobustCommand*{\reportclassdate}[1]{\gdef\@reportclassdate{#1}}
+\DeclareRobustCommand*{\reportlabassistant}[1]{\gdef\@reportlabassistant{#1}}
+
+\reportgroup{}
+\reporttutor{}
+\reportclassdate{}
+\reportlabassistant{}
+
+%    \end{macrocode}
+% \DescribeMacro{\maketitle}
+%    \begin{macrocode}
+\renewcommand{\maketitle}{
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{center}
+    \includegraphics{logo-pwr-2016.pdf}
+    \vspace{17ex}
+    \hrule
+    \vspace{1ex}
+    {\huge \bfseries \@title}
+    \vspace{1ex}
+    \hrule
+    \vfill
+    \large
+    \textsc{\@author}\\
+    \vspace{\baselineskip}
+    \textsc{Tutor: \@reporttutor}\\
+    \textsc{Laboratory group: \@reportgroup}\\
+  \end{center}
+\end{titlepage}
+}
+%    \end{macrocode}
+% MATLAB command.
+%    \begin{macrocode}
+\newcommand{\MATLAB}{\textsc{Matlab}\xspace}
+%    \end{macrocode}
+% Bold letters in matrices
+%    \begin{macrocode}
+\newcommand{\matr}[1]{\mathbf{#1}}
+%    \end{macrocode}
+% Augmented matrix
+%    \begin{macrocode}
+\newenvironment{amatrix}[2]{%
+  \left[\begin{array}{@{}*{#1}{c} | c *{#2}{c} @{}}
+}{%
+  \end{array}\right]
+}
+%    \end{macrocode}
+% \Finale
