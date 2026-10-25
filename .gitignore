@@ -1,0 +1,14 @@
+# Project-specific
+build
+out
+
+# LaTeX
+*.aux
+*.bbl
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.out
+*.pdf
+*.sty
