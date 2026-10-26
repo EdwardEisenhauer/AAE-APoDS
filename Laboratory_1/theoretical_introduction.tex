@@ -1,0 +1,66 @@
+\section{Theoretical introduction}
+\nocite{TietzeSchenk, TL06x}
+An operational amplifier (op-amp) is a differential amplifier with a very high voltage gain, a high input impedance and a low output impedance.
+In the circuits below it always works with negative feedback, so its output settles at the value for which the voltage between the inputs is close to zero.
+Together with the negligible input currents this gives the two rules of the ideal op-amp used throughout: $U_+ = U_-$ and $I_+ = I_- = 0$.
+
+The op-amp used in this laboratory is the TL061, a low-power JFET-input op-amp.
+Its parameters relevant here are listed in \autoref{tab:tl061}.
+\begin{table}[ht]
+  \centering
+  \caption{TL061C parameters at $V_{CC\pm} = \pm\qty{15}{V}$ and \qty{25}{\celsius}~\cite{TL06x}}
+  \label{tab:tl061}
+  \begin{tabular}{lrr}
+    \hline
+    Parameter & Typical & Worst case \\
+    \hline
+    Input offset voltage $V_{IO}$ & \qty{3}{mV} & \qty{15}{mV} \\
+    Input bias current $I_{IB}$ & \qty{30}{pA} & \qty{400}{pA} \\
+    Unity-gain bandwidth $f_T$ & \qty{1}{MHz} & \\
+    Slew rate $SR$ & \qty{3.5}{V/\us} & \qty{1.5}{V/\us} \\
+    Common-mode rejection ratio & \qty{86}{dB} & \qty{70}{dB} \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Inverting amplifier}\label{sec:th_inverting}
+The input signal is applied through $R_1$ to the inverting input, and $R_4$ closes the feedback loop.
+The inverting input is a virtual ground, so the current $U_{in}/R_1$ flows through $R_4$ and
+\begin{equation}\label{eqn:inverting}
+  G = \frac{U_{out}}{U_{in}} = -\frac{R_4}{R_1}.
+\end{equation}
+The bandwidth is limited by the gain-bandwidth product of the op-amp: the upper cut-off frequency is $f_H \approx f_T / (1 + R_4/R_1)$.
+A capacitor $C_3$ in parallel with $R_4$ adds a pole at $f_c = 1/(2\pi R_4 C_3)$.
+
+\subsection{Non-inverting amplifier}\label{sec:th_noninverting}
+The signal is applied to the non-inverting input, and $R_1$ connects the inverting input to ground.
+\begin{equation}\label{eqn:noninverting}
+  G = 1 + \frac{R_4}{R_1}, \qquad f_H \approx \frac{f_T}{G}.
+\end{equation}
+With $C_3$ in parallel with $R_4$, the gain falls from $G$ above $1/(2\pi R_4 C_3)$, but only down to unity.
+
+\subsection{Integrator}\label{sec:th_integrator}
+With a capacitor $C_3$ in the feedback path, the current $U_{in}/R_1$ charges $C_3$:
+\begin{equation}\label{eqn:integrator}
+  U_{out}(t) = -\frac{1}{R_1 C_3}\int U_{in}\,dt, \qquad H(j\omega) = -\frac{1}{j\omega R_1 C_3}.
+\end{equation}
+A square wave of amplitude $U_{in}$ and frequency $f$ is integrated into a triangle wave of amplitude $U_{out} = U_{in}/(4 f R_1 C_3)$.
+The resistor $R_4$ in parallel with $C_3$ limits the DC gain to $-R_4/R_1$, so the circuit integrates only for $f \gg 1/(2\pi R_4 C_3)$.
+
+\subsection{Differentiator}\label{sec:th_differentiator}
+With a capacitor $C_1$ at the input and $R_4$ in the feedback path:
+\begin{equation}\label{eqn:differentiator}
+  U_{out}(t) = -R_4 C_1 \frac{dU_{in}}{dt}, \qquad H(j\omega) = -j\omega R_4 C_1.
+\end{equation}
+A triangle wave of amplitude $U_{in}$ and frequency $f$ becomes a square wave of amplitude $U_{out} = 4 f R_4 C_1 U_{in}$.
+The resistor $R_1$ in series with $C_1$ limits the gain at high frequencies and prevents ringing; the circuit differentiates up to about $1/(2\pi R_1 C_1)$.
+
+\subsection{Non-ideal parameters}\label{sec:th_nonideal}
+\begin{description}
+  \item[Offset voltage] The DC voltage between the inputs needed to bring the output to zero. It appears at the output multiplied by the noise gain $1 + R_4/R_1$.
+  \item[CMRR] The ratio of the differential to the common-mode gain, $\mathrm{CMRR} = 20\log_{10}(A_d/A_{cm})$.
+  \item[Slew rate] The maximum rate of change of the output voltage. A sine of peak value $U_p$ is undistorted only up to $f = SR/(2\pi U_p)$.
+\end{description}
+
+\subsection{Transfer function}\label{sec:th_transfer}
+The transfer function $H(j\omega) = U_{out}(j\omega)/U_{in}(j\omega)$ is measured with a sine input: at each frequency the magnitude is the ratio of the amplitudes, expressed in decibels as $K = 20\log_{10}(|U_{out}|/|U_{in}|)$, and the phase is $\varphi = 360^\circ \cdot f \cdot \Delta t$, where $\Delta t$ is the time shift between the input and the output.

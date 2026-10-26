@@ -1,0 +1,52 @@
+\documentclass[a4paper]{article}
+\usepackage{WUSTReport}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage[european resistors]{circuitikz}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{siunitx}
+\usepackage{todonotes}
+
+\sisetup{
+  per-mode=symbol
+}
+
+\title{Analog Peripherals of Digital Systems --- Laboratory 1:
+  Operational amplifier}
+\author{
+  Jakub Jaworski 252929\\
+  Sergiusz Warga 230757
+}
+\reportgroup{Tuesday 10:15}
+\reportclassdate{2026-10-27}
+
+% Fields of the course front page (front_page.tex)
+\newcommand{\labgroup}{\todo[inline]{group number}}
+\newcommand{\labtime}{10:15}
+\newcommand{\labtopic}{Operational amplifier: inverting and non-inverting
+  amplifier, integrator and differentiator}
+\newcommand{\labtask}{Design, SPICE analysis and measurement of the four basic
+  op-amp circuits with a TL061: frequency response, offset and slew rate of the
+  amplifiers, waveforms of the integrator and the differentiator.}
+\newcommand{\labstudentone}{Jakub Jaworski 252929}
+\newcommand{\labstudenttwo}{Sergiusz Warga 230757}
+
+\begin{document}
+
+\input{front_page}
+
+\tableofcontents
+
+\include{theoretical_introduction}
+
+\include{experiments}
+
+\include{conclusions}
+
+\bibliographystyle{alpha}
+\bibliography{bibliography}
+
+\end{document}

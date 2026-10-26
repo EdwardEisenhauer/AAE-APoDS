@@ -1,6 +1,7 @@
 # Project-specific
 build
 out
+overleaf
 
 # LaTeX
 *.aux
@@ -11,4 +12,5 @@ out
 *.synctex.gz
 *.out
 *.pdf
+!WUSTReport/logo-pwr-2016.pdf
 *.sty

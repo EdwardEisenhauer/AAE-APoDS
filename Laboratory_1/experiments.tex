@@ -1,0 +1,138 @@
+\section{Experiments}\label{sec:experiments}
+
+For the resistor values we used E24 series.
+
+\subsection{Inverting amplifier}\label{sec:inverting}
+
+The first operational amplifier circuit to construct and measure was the
+inverting amplifier. We have chosen the gain of $G=-10$ and the feedback
+restistor value of $R_F=\qty{100}{\kilo\ohm}$. To calculate the value of $R_G$
+resistor we transformed the~\autoref{eqn:inverting} into:
+\begin{equation}
+  R_G = -\frac{R_F}{G} = \frac{\qty{100}{\kilo\ohm}}{10} = \qty{10}{\kilo\ohm}
+\end{equation}
+
+Applying these values to our testbench PCB gave us $R_1=\qty{10}{\kilo\ohm}$,
+$R_4=\qty{100}{\kilo\ohm}$. We calulated the compensation restistor $R_5$ value
+as proposed in the laboratory instruction to get
+$R_5=R_1|R_4=\frac{100}{11}\,\unit{\kilo\ohm} \approx \qty{9.1}{\kilo\ohm}$.
+The circuit is shown in \autoref{fig:inverting}.
+
+\begin{figure}[ht]
+  \centering
+  \input{schematics/inverting}
+  \caption{Inverting amplifier without the feedback capacitor $C_3$}
+  \label{fig:inverting}
+\end{figure}
+
+After measuring the circuit frequency response we added the feedback capacitor
+$C_3=\qty{1}{\nano\farad}$ in parallel with $R_4$ as shown
+in~\autoref{fig:inverting_c3}.
+
+\begin{figure}[ht]
+  \centering
+  \input{schematics/inverting_c3}
+  \caption{Inverting amplifier with the feedback capacitor $C_3$}
+  \label{fig:inverting_c3}
+\end{figure}
+
+\todo[inline]{Design: chosen gain, $R_1$, $R_4$, $R_5 = R_1 \parallel R_4$, calculated $f_H$, $f_c$ with $C_3$ and worst-case offset.}
+
+\subsubsection{Frequency response}
+\todo[inline]{Bode plot (magnitude in dB and phase, logarithmic frequency): (a) without $C_3$, (b) with $C_3 = \qty{1}{nF}$, (c) cut-off frequencies marked and compared with the calculation.}
+
+\subsubsection{SPICE analysis}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{sim_inverting_ac}
+  \caption{Inverting amplifier without $C_3$, AC analysis (ngspice, TL061 model)}
+  \label{fig:sim_inverting}
+\end{figure}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{sim_inverting_c3_ac}
+  \caption{Inverting amplifier with $C_3$, AC analysis (ngspice, TL061 model)}
+  \label{fig:sim_inverting_c3}
+\end{figure}
+\todo[inline]{Compare the simulated cut-off frequencies (\autoref{fig:sim_inverting} and~\ref{fig:sim_inverting_c3}, \texttt{simulation/out/results.csv}) with the calculated ones and the measurement.}
+
+\subsubsection{Offset}
+\todo[inline]{Measured output offset with the input grounded, input-referred value, comparison with the data sheet.}
+
+\subsubsection{Slew rate}
+\todo[inline]{Oscilloscope screenshot of the output edge, measured slew rate, comparison with \qty{3.5}{V/\us} typical.}
+
+\subsection{Non-inverting amplifier}\label{sec:noninverting}
+\todo[inline]{Design: chosen gain, $R_1$, $R_4$, $R_2 = R_1 \parallel R_4$, calculated $f_H$, $C_3$ pole and worst-case offset. Schematic.}
+
+\subsubsection{Frequency response}
+\todo[inline]{Bode plot: (a) without $C_3$, (b) with $C_3 = \qty{1}{nF}$, (c) cut-off frequencies marked and compared with the calculation.}
+
+\subsubsection{SPICE analysis}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{sim_noninverting_ac}
+  \caption{Non-inverting amplifier without $C_3$, AC analysis (ngspice, TL061 model)}
+  \label{fig:sim_noninverting}
+\end{figure}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{sim_noninverting_c3_ac}
+  \caption{Non-inverting amplifier with $C_3$, AC analysis (ngspice, TL061 model)}
+  \label{fig:sim_noninverting_c3}
+\end{figure}
+\todo[inline]{Compare the simulated cut-off frequencies (\autoref{fig:sim_noninverting} and~\ref{fig:sim_noninverting_c3}) with the calculated ones and the measurement.}
+
+\subsubsection{Offset}
+\todo[inline]{Measured output offset, input-referred value, comparison with the data sheet.}
+
+\subsubsection{Slew rate}
+\todo[inline]{Oscilloscope screenshot, measured slew rate, comparison with the data sheet.}
+
+\subsection{Integrator}\label{sec:integrator}
+\todo[inline]{Design: input square wave $U_{in}$, $f$, target triangle $U_{out}$; $R_1$, $C_3$, $R_4$, $R_5$. Schematic.}
+
+\subsubsection{Frequency response}
+\todo[inline]{Bode plot with the band of correct integration marked (\qty{-20}{dB} per decade, above $1/(2\pi R_4 C_3)$).}
+
+\subsubsection{Waveforms}
+\todo[inline]{Oscilloscope screenshot: input square wave and output triangle wave.}
+
+\subsubsection{SPICE analysis}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{sim_integrator_ac}
+  \caption{Integrator, AC analysis; shaded: band of correct integration (ngspice)}
+  \label{fig:sim_integrator_ac}
+\end{figure}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{sim_integrator_tran}
+  \caption{Integrator, transient analysis with the square-wave input (ngspice)}
+  \label{fig:sim_integrator_tran}
+\end{figure}
+\todo[inline]{Compare the simulated triangle amplitude and band with the design and the measurement.}
+
+\subsection{Differentiator}\label{sec:differentiator}
+\todo[inline]{Design: input triangle wave $U_{in}$, $f$, target square $U_{out}$; $R_4$, $C_1$, $R_1$ from the stability condition, $R_5 = R_4$. Schematic.}
+
+\subsubsection{Frequency response}
+\todo[inline]{Bode plot with the band of correct differentiation marked (\qty{+20}{dB} per decade, up to $1/(2\pi R_1 C_1)$).}
+
+\subsubsection{Waveforms}
+\todo[inline]{Oscilloscope screenshot: input triangle wave and output square wave.}
+
+\subsubsection{SPICE analysis}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{sim_differentiator_ac}
+  \caption{Differentiator, AC analysis; shaded: band of correct differentiation (ngspice)}
+  \label{fig:sim_differentiator_ac}
+\end{figure}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\linewidth]{sim_differentiator_tran}
+  \caption{Differentiator, transient analysis with the triangle-wave input (ngspice)}
+  \label{fig:sim_differentiator_tran}
+\end{figure}
+\todo[inline]{Compare the simulated square amplitude and band with the design and the measurement.}
